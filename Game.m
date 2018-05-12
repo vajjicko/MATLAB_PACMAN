@@ -1,7 +1,6 @@
 classdef Game < handle
     properties
         health
-        mapFile
         map
         numberOfRows
         numberOfColumns
@@ -12,43 +11,18 @@ classdef Game < handle
     end
     
     methods
-        function obj = Game(mapFile, health, numberOfMonsters)
-            obj.mapFile = mapFile;
+        function obj = Game(map, health, numberOfMonsters)
+            obj.map = map;
             obj.health = health;
             obj.numberOfMonsters = numberOfMonsters;
+            obj.numberOfRows = size(map,1);
+            obj.numberOfColumns = size(map,2);
         end
-        
+
         function initializeGame(obj)
             obj.coins = 0;
-            
-            loadMap(obj);
-            
             obj.pacman = initializePacman(obj);
-            
             obj.monsters = initializeMonsters(obj);
-        end
-        
-        function loadMap(obj)
-            inputMap = dlmread(obj.mapFile,' ');
-            
-            obj.numberOfRows = size(inputMap,1);
-            obj.numberOfColumns = size(inputMap,2);
-            
-            obj.map = prepareMap(obj, inputMap);
-        end
-        
-        function map = prepareMap(obj, inputMap)
-            map = char(obj.numberOfRows, obj.numberOfColumns);
-            
-            for r = 1:obj.numberOfRows
-                for c = 1:obj.numberOfColumns
-                    if inputMap(r,c) == 1
-                        map(r,c) = 'X';
-                    else
-                        map(r,c) = 'C';
-                    end
-                end
-            end
         end
         
         function pacman = initializePacman(obj)

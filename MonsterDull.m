@@ -8,7 +8,7 @@ classdef MonsterDull < Monster
         
         function monsterMove(obj, up, right, down, left, direction)
             while true
-                random = floor(rand(1) * 3);
+                random = floor(rand(1) * 4);
                 
                 switch random
                     case 0
